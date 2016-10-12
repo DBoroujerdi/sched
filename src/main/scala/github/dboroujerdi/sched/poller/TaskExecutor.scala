@@ -8,9 +8,9 @@ import scala.util.{Failure, Try}
 
 class TaskExecutor(task: Task) {
 
-  val ex = new ScheduledThreadPoolExecutor(1)
+  private[this] val ex = new ScheduledThreadPoolExecutor(1)
 
-  val runnable = new Runnable {
+  private[this] val runnable = new Runnable {
     def run() = {
       Try(task()) match {
         case Failure(reason) => reason.printStackTrace()
@@ -18,7 +18,7 @@ class TaskExecutor(task: Task) {
     }
   }
 
-  def start() = {
+  def start = {
     // todo: externalise configuration
     ex.scheduleAtFixedRate(runnable, 1, 10, TimeUnit.SECONDS)
   }

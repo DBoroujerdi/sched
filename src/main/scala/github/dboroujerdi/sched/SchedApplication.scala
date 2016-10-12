@@ -15,5 +15,5 @@ object SchedApplication extends App
     println(res)
   }
 
-  poller.start()
+  poller.start
 }
