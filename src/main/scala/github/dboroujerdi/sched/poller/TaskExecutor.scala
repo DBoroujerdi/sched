@@ -4,7 +4,7 @@ import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
 
 import github.dboroujerdi.sched.poller.TaskExecutor.Task
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Try}
 
 class TaskExecutor(task: Task) {
 
