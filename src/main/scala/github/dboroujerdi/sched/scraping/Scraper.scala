@@ -1,14 +1,12 @@
-package github.dboroujerdi.sched
+package github.dboroujerdi.sched.scraping
 
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
-import net.ruippeixotog.scalascraper.browser.JsoupBrowser.JsoupElement
 import net.ruippeixotog.scalascraper.model.Element
 
 trait Scraper {
 
-  import net.ruippeixotog.scalascraper.dsl.DSL._
   import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
-  import net.ruippeixotog.scalascraper.dsl.DSL.Parse._
+  import net.ruippeixotog.scalascraper.dsl.DSL._
 
   private[this] val browser = JsoupBrowser()
 
