@@ -14,6 +14,7 @@ class TaskExecutor(task: Task, interval: Int) {
     def run() = {
       Try(task()) match {
         case Failure(reason) => reason.printStackTrace()
+        case _ =>
       }
     }
   }
