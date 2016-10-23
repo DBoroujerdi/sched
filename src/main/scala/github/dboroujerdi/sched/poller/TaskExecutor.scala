@@ -6,11 +6,18 @@ import github.dboroujerdi.sched.poller.TaskExecutor.Task
 
 import scala.util.{Failure, Try}
 
-class TaskExecutor(task: Task, interval: Int) {
+trait TaskExecutor {
+  def start(task: Task)
+}
 
+object TaskExecutor {
+  type Task = () => Unit
+}
+
+class ScheduledTaskExecutor(interval: Int) extends TaskExecutor {
   private[this] val ex = new ScheduledThreadPoolExecutor(1)
 
-  private[this] val runnable = new Runnable {
+  private def createRunnable(task: Task): Runnable = new Runnable {
     def run() = {
       Try(task()) match {
         case Failure(reason) => reason.printStackTrace()
@@ -19,15 +26,8 @@ class TaskExecutor(task: Task, interval: Int) {
     }
   }
 
-  def start = {
+  def start(task: Task) = {
+    val runnable = createRunnable(task)
     ex.scheduleAtFixedRate(runnable, 1, interval, TimeUnit.SECONDS)
-  }
-}
-
-object TaskExecutor {
-  type Task = Unit => Unit
-
-  def apply(task: Task, interval: Int) = {
-    new TaskExecutor(task, interval)
   }
 }

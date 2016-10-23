@@ -1,14 +1,16 @@
 package github.dboroujerdi.sched
 
 import github.dboroujerdi.sched.config.DefaultConfigComponent
-import github.dboroujerdi.sched.poller.PollExecutorModule
-import github.dboroujerdi.sched.scraping.{ScraperModule, WebBrowserComponent}
+import github.dboroujerdi.sched.poller.PollExecutorComponent
+import github.dboroujerdi.sched.scraping.{ScraperComponent, WebBrowserComponent}
 
 object SchedApplication extends App
-  with PollExecutorModule
-  with ScraperModule
+  with PollExecutorComponent
+  with ScraperComponent
   with WebBrowserComponent
   with DefaultConfigComponent {
 
-  poller.start
+  taskExecutor.start { () =>
+    println("bleep")
+  }
 }
