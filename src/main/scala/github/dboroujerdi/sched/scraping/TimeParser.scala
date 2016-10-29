@@ -60,8 +60,6 @@ object TimeParser extends TimeParser {
         (day, month) <- parseDayOfYear(timeField)
         matchDate <- Option(matchTime.withMonthOfYear(month).withDayOfMonth(day).withYear(currentDate.getYear))
       } yield checkAndHandleMatchesInNewYear(matchDate, currentDate)
-
-    case _ => None
   }
 
   def updateWithTheCurrentYear(matchTime: DateTime, currentDate: DateTime) = {
