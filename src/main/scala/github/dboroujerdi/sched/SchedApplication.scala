@@ -2,15 +2,19 @@ package github.dboroujerdi.sched
 
 import github.dboroujerdi.sched.config.DefaultConfigComponent
 import github.dboroujerdi.sched.poller.PollExecutorComponent
-import github.dboroujerdi.sched.scraping.{ScraperComponent, WebBrowserComponent}
+import github.dboroujerdi.sched.scraping.{WebBrowserComponent, WebScraperComponent}
 
 object SchedApplication extends App
   with PollExecutorComponent
-  with ScraperComponent
+  with WebScraperComponent
   with WebBrowserComponent
   with DefaultConfigComponent {
 
   taskExecutor.start { () =>
-    println("bleep")
+    val events = scraper.scrape(config.getString("schedule.scrape.url"))
+
+    println(events)
+
+    // todo send to sse stream
   }
 }

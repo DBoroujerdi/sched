@@ -6,6 +6,8 @@ import net.ruippeixotog.scalascraper.model.Document
 trait BrowserComponent {
   trait Browser {
     final val browser = JsoupBrowser()
+
+    // todo this method could return null or throw an exception
     def fetchDocument(location: String): Document
   }
 
