@@ -11,7 +11,7 @@ libraryDependencies += "org.scalatest" % "scalatest_2.11" % "3.0.0" % "test"
 libraryDependencies += "com.typesafe" % "config" % "1.3.1"
 libraryDependencies += "org.typelevel" %% "cats" % "0.7.2"
 libraryDependencies += "com.beachape" %% "enumeratum" % "1.4.17"
-
+libraryDependencies += "io.spray" % "spray-json_2.11" % "1.3.2"
 
 
 scalacOptions += "-language:experimental.macros"
