@@ -1,6 +1,7 @@
 package github.dboroujerdi.sched.sse
 
 import github.dboroujerdi.sched.model.ScheduledEvent
+import github.dboroujerdi.sched.model.Types.Schedule
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormatter, ISODateTimeFormat}
 import spray.json.DefaultJsonProtocol
@@ -9,16 +10,17 @@ import spray.json._
 trait Protocols extends DefaultJsonProtocol {
 
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
-
     private val parserISO : DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
-
     override def write(obj: DateTime) = JsString(parserISO.print(obj))
-
-    override def read(json: JsValue) : DateTime = json match {
-      case JsString(s) => parserISO.parseDateTime(s)
-      case _ => throw new DeserializationException("Error info you want here ...")
-    }
+    override def read(json: JsValue) : DateTime = ???
   }
 
-  implicit val productFormat = jsonFormat5(ScheduledEvent)
+  implicit object ScheduleFormat extends RootJsonFormat[Schedule] {
+    override def write(obj: Schedule): JsValue = JsArray(obj.map(_.toJson).toVector)
+    override def read(json: JsValue): Schedule = ???
+  }
+
+  implicit val SchduleEventFormat = jsonFormat5(ScheduledEvent)
 }
+
+object Protocols extends Protocols
