@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 object Types {
   type Sport = String
   type MatchId = String
+  type Schedule = Seq[ScheduledEvent]
 }
 
 case class ScheduledEvent(id: MatchId, home: String, away: String, time: DateTime, sport: Sport)
