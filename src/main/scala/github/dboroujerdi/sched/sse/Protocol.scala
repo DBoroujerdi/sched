@@ -20,7 +20,7 @@ trait Protocols extends DefaultJsonProtocol {
     override def read(json: JsValue): Schedule = ???
   }
 
-  implicit val SchduleEventFormat = jsonFormat5(ScheduledEvent)
+  implicit val ScheduledEventFormat = jsonFormat5(ScheduledEvent)
 }
 
 object Protocols extends Protocols
