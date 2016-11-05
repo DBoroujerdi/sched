@@ -5,9 +5,7 @@ import github.dboroujerdi.sched.poller.PollExecutorComponent
 import github.dboroujerdi.sched.scraping.{WebBrowserComponent, WebScraperComponent}
 import github.dboroujerdi.sched.sse.{DefaultActorSystemComponent, SseWebServerComponent, StreamPublisherComponent}
 
-
-object SchedApplication extends App
-  with PollExecutorComponent
+trait Application extends PollExecutorComponent
   with WebScraperComponent
   with WebBrowserComponent
   with DefaultConfigComponent
@@ -22,3 +20,5 @@ object SchedApplication extends App
 
   startServer()
 }
+
+object DefaultApplication extends App with Application
