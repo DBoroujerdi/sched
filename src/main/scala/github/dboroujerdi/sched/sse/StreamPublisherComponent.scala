@@ -3,6 +3,7 @@ package github.dboroujerdi.sched.sse
 import akka.http.scaladsl.model.HttpEntity.ChunkStreamPart
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.{Sink, Source}
+import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.model.ScheduledEvent
 import org.reactivestreams.Publisher
 

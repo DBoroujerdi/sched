@@ -1,9 +1,10 @@
 package github.dboroujerdi.sched
 
 import github.dboroujerdi.sched.config.DefaultConfigComponent
+import github.dboroujerdi.sched.infrastructure.DefaultActorSystemComponent
 import github.dboroujerdi.sched.poller.PollExecutorComponent
 import github.dboroujerdi.sched.scraping.{WebBrowserComponent, WebScraperComponent}
-import github.dboroujerdi.sched.sse.{DefaultActorSystemComponent, WebServerComponent, StreamPublisherComponent}
+import github.dboroujerdi.sched.sse.{StreamPublisherComponent, WebServerComponent}
 
 trait Application extends PollExecutorComponent
   with WebScraperComponent

@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.sse
+package github.dboroujerdi.sched.infrastructure
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
@@ -9,6 +9,6 @@ trait ActorSystemComponent {
 }
 
 trait DefaultActorSystemComponent extends ActorSystemComponent {
-  implicit val system = ActorSystem("my-system")
+  implicit val system = ActorSystem("sched-system")
   implicit val materializer = ActorMaterializer()
 }
