@@ -6,7 +6,8 @@ import org.joda.time.DateTime
 import org.scalatest.FunSpec
 import spray.json._
 
-class ProtocolsSpec extends FunSpec with Protocols {
+class ProtocolsSpec extends FunSpec
+  with Protocols {
 
   describe("Json Protocol") {
     it("should encode a ScheduledEvent as JSON") {

@@ -15,7 +15,7 @@ trait Protocols extends DefaultJsonProtocol {
     override def read(json: JsValue) : DateTime = ???
   }
 
-  implicit object ScheduleFormat extends RootJsonFormat[Schedule] {
+  implicit object ScheduleFormat extends RootJsonFormat[Seq[ScheduledEvent]] {
     override def write(obj: Schedule): JsValue = JsArray(obj.map(_.toJson).toVector)
     override def read(json: JsValue): Schedule = ???
   }

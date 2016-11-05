@@ -14,8 +14,8 @@ libraryDependencies ++= Seq(
   "com.beachape" %% "enumeratum" % "1.4.17",
   "io.spray" %% "spray-json" % "1.3.2",
   "de.heikoseeberger" %% "akka-sse" % "1.11.0",
-  "com.typesafe.akka" %% "akka-http-experimental" % "2.4.3",
-  "com.typesafe.akka" %% "akka-stream" % "2.4.3",
+  "com.typesafe.akka" %% "akka-http-experimental" % "2.4.11",
+  "com.typesafe.akka" %% "akka-stream" % "2.4.11",
   "org.scalatest" % "scalatest_2.11" % "3.0.0" % "test"
 )
 
