@@ -11,7 +11,9 @@ trait WebServerComponent {
 
   val requestHandler: HttpRequest => HttpResponse = {
     case HttpRequest(HttpMethods.GET, Uri.Path("/"), _, _, _) =>
-      val source = Source.fromPublisher(publisher).map(Chunk(_))
+      val source = Source.fromPublisher(publisher)
+        .map(ServerSentEvent(_, "schedule"))
+        .map(s => Chunk(s.toString))
 
       HttpResponse (
         entity = new Chunked(ContentTypes.`application/json`, source)
