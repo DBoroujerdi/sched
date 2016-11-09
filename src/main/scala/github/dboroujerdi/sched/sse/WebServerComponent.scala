@@ -1,7 +1,7 @@
 package github.dboroujerdi.sched.sse
 
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpEntity.Chunked
+import akka.http.scaladsl.model.HttpEntity.{Chunk, Chunked}
 import akka.http.scaladsl.model._
 import akka.stream.scaladsl.{Sink, Source}
 import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
@@ -11,8 +11,10 @@ trait WebServerComponent {
 
   val requestHandler: HttpRequest => HttpResponse = {
     case HttpRequest(HttpMethods.GET, Uri.Path("/"), _, _, _) =>
+      val source = Source.fromPublisher(publisher).map(Chunk(_))
+
       HttpResponse (
-        entity = new Chunked(ContentTypes.`application/json`, Source.fromPublisher(publisher))
+        entity = new Chunked(ContentTypes.`application/json`, source)
       )
     case _: HttpRequest => HttpResponse(404, entity = "Unknown resource!")
   }

@@ -1,24 +1,28 @@
 package github.dboroujerdi.sched.sse
 
-import akka.http.scaladsl.model.HttpEntity.ChunkStreamPart
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.{Sink, Source}
 import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
-import github.dboroujerdi.sched.model.ScheduledEvent
+import github.dboroujerdi.sched.model.Types.Schedule
 import org.reactivestreams.Publisher
 
+import spray.json._
+
 trait PublisherComponent {
-  val publisher: Publisher[ChunkStreamPart]
+  val publisher: Publisher[String]
 }
 
-trait StreamPublisherComponent extends PublisherComponent {
+trait StreamPublisherComponent extends PublisherComponent with Protocols {
   self: ActorSystemComponent =>
 
   private val publisherRef = system.actorOf(SchedulePublisher.props, "publisher-actor")
 
-  def publish(schedule: Seq[ScheduledEvent]): Unit = {
-    publisherRef ! schedule
+  def publish(schedule: Schedule): Unit = {
+    println("publishing")
+    publisherRef ! Publish(schedule)
   }
 
-  val publisher = Source.fromPublisher(ActorPublisher[ChunkStreamPart](publisherRef)).runWith(Sink.asPublisher(fanout = true))
+  val publisher = Source.fromPublisher(ActorPublisher[Schedule](publisherRef))
+    .map(_.toJson.toString)
+    .runWith(Sink.asPublisher(fanout = true))
 }

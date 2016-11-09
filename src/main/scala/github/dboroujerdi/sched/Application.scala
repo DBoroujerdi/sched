@@ -15,7 +15,10 @@ trait Application extends PollExecutorComponent
   with WebServerComponent {
 
   taskExecutor.start { () =>
+    println("Scrape task executing..")
+
     val events = scraper.scrape(config.getString("schedule.scrape.url"))
+
     publish(events)
   }
 
