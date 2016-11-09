@@ -1,10 +1,8 @@
 package github.dboroujerdi.sched.scraping
 
-import java.io.File
-
 import cats.data.Xor
 import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.scraping.TestData.{browser, exampleSchedule}
+import github.dboroujerdi.sched.scraping.TestData.exampleSchedule
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
 
@@ -41,24 +39,6 @@ class HtmlScheduleParserSpec extends FunSpec with Matchers {
             Xor.Right(ScheduledEvent("10010467", "Watford", "Chelsea", _, "Football"))
           ) =>
         }
-      }
-    }
-
-    describe("given a real life schedule page") {
-      val htmlParser = new HtmlScheduleParser(TimeParser)
-      val file = new File("/Users/dbo23/projects/open-source/sched/src/test/resources/sched_1.html")
-      val doc = browser.parseFile(file)
-
-      it("should parse 326 events") {
-        val events = htmlParser.parseSchedule(doc)
-
-        println(events)
-
-        val failed = events.filter(_.isLeft)
-
-//        assert(failed.length == 154)
-//        assert(events.length == 326)
-        // todo assert they all have valid id's
       }
     }
   }
