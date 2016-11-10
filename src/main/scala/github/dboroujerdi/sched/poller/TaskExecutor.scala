@@ -8,6 +8,7 @@ import scala.util.{Failure, Try}
 
 trait TaskExecutor {
   def start(task: Task)
+  def stop()
 }
 
 object TaskExecutor {
@@ -29,5 +30,9 @@ class ScheduledTaskExecutor(interval: Int) extends TaskExecutor {
   def start(task: Task) = {
     val runnable = createRunnable(task)
     ex.scheduleAtFixedRate(runnable, 1, interval, TimeUnit.SECONDS)
+  }
+
+  def stop(): Unit = {
+    ex.shutdown()
   }
 }
