@@ -6,13 +6,11 @@ import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.model.Types.Schedule
 import org.reactivestreams.Publisher
 
-import spray.json._
-
 trait PublisherComponent {
-  val publisher: Publisher[String]
+  val publisher: Publisher[Schedule]
 }
 
-trait StreamPublisherComponent extends PublisherComponent with Protocols {
+trait StreamPublisherComponent extends PublisherComponent {
   self: ActorSystemComponent =>
 
   private val publisherRef = system.actorOf(SchedulePublisher.props, "publisher-actor")
@@ -22,7 +20,8 @@ trait StreamPublisherComponent extends PublisherComponent with Protocols {
     publisherRef ! Publish(schedule)
   }
 
-  val publisher = Source.fromPublisher(ActorPublisher[Schedule](publisherRef))
-    .map(_.toJson.toString)
+  val publisher =
+    Source
+    .fromPublisher(ActorPublisher[Schedule](publisherRef))
     .runWith(Sink.asPublisher(fanout = true))
 }

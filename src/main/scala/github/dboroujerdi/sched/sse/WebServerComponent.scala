@@ -7,12 +7,15 @@ import akka.stream.scaladsl.{Sink, Source}
 import github.dboroujerdi.sched.config.ConfigComponent
 import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
 
-trait WebServerComponent {
+import spray.json._
+
+trait WebServerComponent extends Protocols {
   self: PublisherComponent with ActorSystemComponent with ConfigComponent =>
   val requestHandler: HttpRequest => HttpResponse = {
 
     case HttpRequest(HttpMethods.GET, Uri.Path("/"), _, _, _) =>
       val scheduleSource = Source.fromPublisher(publisher)
+        .map(_.toJson.toString)
         .map(ServerSentEvent(_, "schedule"))
         .map(sse => Chunk(sse.toString))
 
