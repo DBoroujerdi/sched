@@ -9,10 +9,10 @@ import github.dboroujerdi.sched.sse.{StreamPublisherComponent, WebServerComponen
 trait Application extends PollExecutorComponent
   with WebScraperComponent
   with WebBrowserComponent
-  with DefaultConfigComponent
   with DefaultActorSystemComponent
   with StreamPublisherComponent
-  with WebServerComponent {
+  with WebServerComponent
+  with DefaultConfigComponent {
 
   taskExecutor.start { () =>
     println("Scrape task executing..")
