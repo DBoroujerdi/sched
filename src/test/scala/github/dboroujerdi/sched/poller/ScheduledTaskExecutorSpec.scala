@@ -1,6 +1,6 @@
 package github.dboroujerdi.sched.poller
 
-import org.scalatest.{AsyncFunSpecLike, FunSpec, Matchers}
+import org.scalatest.{AsyncFunSpecLike, Matchers}
 
 import scala.concurrent.Promise
 
