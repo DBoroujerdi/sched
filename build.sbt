@@ -4,10 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.11.8"
 
-resolvers += Resolver.bintrayRepo("hseeberger", "maven")
-
 libraryDependencies ++= Seq(
-  "com.bumnetworks" %% "numerato" % "0.0.1",
   "net.ruippeixotog" %% "scala-scraper" % "1.1.0",
   "com.typesafe" % "config" % "1.3.1",
   "org.typelevel" %% "cats" % "0.7.2",
