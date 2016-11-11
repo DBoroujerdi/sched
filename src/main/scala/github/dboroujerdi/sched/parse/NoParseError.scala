@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.scraping
+package github.dboroujerdi.sched.parse
 
 import cats.data.Xor
 import github.dboroujerdi.sched.model.ScheduledEvent

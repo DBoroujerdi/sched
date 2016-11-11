@@ -1,5 +1,6 @@
 package github.dboroujerdi.sched.scraping
 
+import github.dboroujerdi.sched.parse.TimeParser
 import org.joda.time.DateTime
 import org.scalatest.FunSpec
 

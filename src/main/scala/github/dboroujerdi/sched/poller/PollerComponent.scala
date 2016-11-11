@@ -1,10 +1,8 @@
 package github.dboroujerdi.sched.poller
 
-import com.typesafe.config.Config
 import github.dboroujerdi.sched.config.ConfigComponent
 
 trait PollerComponent {
-  val config: Config
   val taskExecutor: TaskExecutor
 }
 

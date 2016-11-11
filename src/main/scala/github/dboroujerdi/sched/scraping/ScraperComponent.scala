@@ -1,40 +1,24 @@
 package github.dboroujerdi.sched.scraping
 
-import cats.data.Xor
-import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.scraping.Types.ErrorOrEvent
+import github.dboroujerdi.sched.model.Types.Schedule
+import github.dboroujerdi.sched.parse.ParserComponent
 
 trait ScraperComponent {
 
   trait Scraper {
-    def scrape(url: String): Seq[ScheduledEvent]
+    def scrape(url: String): Schedule
   }
 
   val scraper: Scraper
 }
 
 trait WebScraperComponent extends ScraperComponent {
-  this: BrowserComponent =>
-
-  val htmlScheduleParser = new HtmlScheduleParser(TimeParser)
+  this: BrowserComponent with ParserComponent =>
 
   object WebScraper extends Scraper {
-    override def scrape(url: String): Seq[ScheduledEvent] = {
+    override def scrape(url: String): Schedule = {
       val doc = browser.fetchDocument(url)
-      val events = htmlScheduleParser.parseSchedule(doc)
-
-      logAndFilterFailures(events)
-    }
-
-    private def logAndFilterFailures(list: Seq[ErrorOrEvent]) = {
-      list.filter(_.isLeft).foreach {
-        case Xor.Left(error @ ExceptionalScrapeError(_, _)) => println("Unable to parse: ", error)
-        case _ =>
-      }
-
-      list.collect {
-        case Xor.Right(event) => event
-      }
+      parser.parse(doc)
     }
   }
 

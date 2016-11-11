@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.scraping.util
+package github.dboroujerdi.sched.parse.util
 
 import java.net.URL
 

@@ -1,33 +1,29 @@
-package github.dboroujerdi.sched.scraping
+package github.dboroujerdi.sched.parse
 
 import java.net.URL
 
 import cats.data.Xor
 import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.model.Types.MatchId
-import github.dboroujerdi.sched.scraping.Types._
-import github.dboroujerdi.sched.scraping.util.UrlParseUtils
+import github.dboroujerdi.sched.model.Types._
+import github.dboroujerdi.sched.parse.util.UrlParseUtils
+import Types.ErrorOrEvent
+import github.dboroujerdi.sched.parse.MatchElementParser.TeamsNames
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
-import net.ruippeixotog.scalascraper.model.{Document, Element}
+import net.ruippeixotog.scalascraper.model.Element
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors.{attr => _, element => _, elementList => _, text => _}
 import org.joda.time.DateTime
 
 import scala.util.{Failure, Success, Try}
 
-class HtmlScheduleParser(timeParser: TimeParser) {
+object MatchElementParser {
+  type MatchElement = Element
+  type TeamsNames = (String, String)
+}
 
-  private type TeamsNames = (String, String)
+class MatchElementParser(timeParser: TimeParser) {
 
-  def parseSchedule(doc: Document): Seq[ErrorOrEvent] = {
-    parseElements(pullOutEventElements(doc))
-  }
-
-  private def parseElements(elements: Seq[Element]): Seq[ErrorOrEvent] = {
-    for {element <- elements} yield parseElement(element)
-  }
-
-  private def parseElement(element: Element): ErrorOrEvent = {
+  def parseElement(element: Element): ErrorOrEvent = {
     try {
       pullOutElementFields(element)
         .flatMap(parseFields) match {
@@ -69,14 +65,6 @@ class HtmlScheduleParser(timeParser: TimeParser) {
         e.printStackTrace()
         None
     }
-  }
-
-  private def pullOutEventElements(doc: Document): Seq[Element] = {
-    (for {
-      tables <- (doc >?> elementList(".tableData")).toSeq
-      table <- tables
-      rows <- (table >?> elementList("tr")).toSeq
-    } yield rows.tail).flatten
   }
 
   private def pullOutElementFields(elem: Element): Option[ElementFields] = {

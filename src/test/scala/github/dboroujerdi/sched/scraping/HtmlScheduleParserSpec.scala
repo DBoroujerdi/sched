@@ -2,6 +2,7 @@ package github.dboroujerdi.sched.scraping
 
 import cats.data.Xor
 import github.dboroujerdi.sched.model.ScheduledEvent
+import github.dboroujerdi.sched.parse.{HtmlScheduleParser, NoParseError, TimeParser}
 import github.dboroujerdi.sched.scraping.TestData.exampleSchedule
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
@@ -11,7 +12,6 @@ class HtmlScheduleParserSpec extends FunSpec with Matchers {
   object FakeTimeParser extends TimeParser {
     override def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = Some(DateTime.now())
   }
-
 
   describe("Schedule HTML parsing") {
     describe("given test schedule") {
