@@ -1,11 +1,15 @@
 package github.dboroujerdi.sched.poller
 
-import org.scalatest.{AsyncFunSpecLike, Matchers}
+import org.scalatest.concurrent.PatienceConfiguration.Timeout
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.time.{Seconds, Span}
+import org.scalatest.{FunSpecLike, Matchers}
 
 import scala.concurrent.Promise
 
 class ScheduledTaskExecutorSpec extends Matchers
-  with AsyncFunSpecLike {
+  with FunSpecLike
+  with ScalaFutures {
 
   describe("A ScheduledTaskExecutor") {
 
@@ -14,12 +18,16 @@ class ScheduledTaskExecutorSpec extends Matchers
 
     it("should eventually execute") {
       val p = Promise[String]()
-      ex.start(() =>
+      ex.start { () =>
         p.success("Hello")
-      )
+      }
 
       val f = p.future
-      f.map { res => assert(res == "Hello") }
+      whenReady(f, Timeout(Span(2, Seconds))) { res =>
+        assert(res == "Hello")
+      }
+
+      ex.stop()
     }
   }
 }
