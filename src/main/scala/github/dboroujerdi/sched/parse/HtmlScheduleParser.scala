@@ -13,14 +13,14 @@ class HtmlScheduleParser(timeParser: TimeParser) {
   private type TeamsNames = (String, String)
 
   def parseSchedule(doc: Document): Seq[ErrorOrEvent] = {
-    parseElements(pullOutEventElements(doc))
+    parseElements(parseMatchElements(doc))
   }
 
   private def parseElements(elements: Seq[Element]): Seq[ErrorOrEvent] = {
     for {element <- elements} yield matchElementParser.parseElement(element)
   }
 
-  private def pullOutEventElements(doc: Document): Seq[Element] = {
+  def parseMatchElements(doc: Document): Seq[Element] = {
     (for {
       tables <- (doc >?> elementList(".tableData")).toSeq
       table <- tables
