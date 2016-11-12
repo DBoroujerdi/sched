@@ -7,8 +7,8 @@ import github.dboroujerdi.sched.poller.TaskExecutor.Task
 import scala.util.{Failure, Try}
 
 trait TaskExecutor {
-  def start(task: Task)
-  def stop()
+  def start(task: Task): Unit
+  def stop(): Unit
 }
 
 object TaskExecutor {
@@ -27,7 +27,7 @@ class ScheduledTaskExecutor(interval: Int) extends TaskExecutor {
     }
   }
 
-  def start(task: Task) = {
+  def start(task: Task): Unit = {
     val runnable = createRunnable(task)
     ex.scheduleAtFixedRate(runnable, 1, interval, TimeUnit.SECONDS)
   }
