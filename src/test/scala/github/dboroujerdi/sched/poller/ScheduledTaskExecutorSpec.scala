@@ -18,9 +18,7 @@ class ScheduledTaskExecutorSpec extends Matchers
 
     it("should eventually execute") {
       val p = Promise[String]()
-      ex.start { () =>
-        p.success("Hello")
-      }
+      ex.start(p.success("Hello"))
 
       val f = p.future
       whenReady(f, Timeout(Span(2, Seconds))) { res =>

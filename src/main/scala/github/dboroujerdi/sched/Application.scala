@@ -3,9 +3,7 @@ package github.dboroujerdi.sched
 import github.dboroujerdi.sched.config.DefaultConfigComponent
 import github.dboroujerdi.sched.infrastructure.DefaultActorSystemComponent
 import github.dboroujerdi.sched.model.Types.Schedule
-import github.dboroujerdi.sched.parse.SynchronousParserComponent
 import github.dboroujerdi.sched.parse.pool.ParallelParserComponent
-import github.dboroujerdi.sched.parse.stream.StreamParseComponent
 import github.dboroujerdi.sched.poller.PollExecutorComponent
 import github.dboroujerdi.sched.scraping.{WebBrowserComponent, WebScraperComponent}
 import github.dboroujerdi.sched.sse.{StreamPublisherComponent, WebServerComponent}
@@ -16,12 +14,12 @@ trait Application extends PollExecutorComponent
   with DefaultActorSystemComponent
   with WebScraperComponent
   with WebBrowserComponent
-  with StreamParseComponent
+  with ParallelParserComponent
   with StreamPublisherComponent
   with WebServerComponent
   with DefaultConfigComponent {
 
-  taskExecutor.start { () =>
+  taskExecutor.start {
     println("Scrape task executing..")
 
     val events: Future[Schedule] = scraper.scrape(config.getString("schedule.scrape.url"))
