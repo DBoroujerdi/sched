@@ -2,7 +2,8 @@ package github.dboroujerdi.sched.parse.stream
 
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.util.Timeout
-import cats.data.Xor
+import cats.data.{OptionT, Xor}
+import github.dboroujerdi.sched.FutureMaybe
 import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.model.ScheduledEvent
 import github.dboroujerdi.sched.model.Types.Schedule
@@ -33,13 +34,16 @@ trait StreamParseComponent extends ParserComponent {
           case Xor.Right(event) => event
         }
 
-    def parse(doc: Document): Future[Schedule] = {
+    def parse(doc: Document): FutureMaybe[Schedule] = {
       val elements: Seq[Element] = htmlParser.parseMatchElements(doc)
 
-      Source(elements.toList)
-        .via(parserFlow)
-        .toMat(Sink.seq[ScheduledEvent])(Keep.right)
-        .run()
+      OptionT {
+        Source(elements.toList)
+          .via(parserFlow)
+          .toMat(Sink.seq[ScheduledEvent])(Keep.right)
+          .run()
+          .map(Option(_))
+      }
     }
   }
 

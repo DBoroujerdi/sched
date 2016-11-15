@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.sse
+package github.dboroujerdi.sched.server
 
 import akka.actor.{Actor, Props}
 import akka.stream.actor.ActorPublisher

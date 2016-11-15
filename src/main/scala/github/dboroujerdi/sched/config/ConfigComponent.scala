@@ -7,6 +7,6 @@ trait ConfigComponent {
 }
 
 trait DefaultConfigComponent extends ConfigComponent {
-  val config: Config = ConfigFactory.load()
+  lazy val config: Config = ConfigFactory.load()
 }
 

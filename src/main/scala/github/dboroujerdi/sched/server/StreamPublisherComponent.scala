@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.sse
+package github.dboroujerdi.sched.server
 
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.{Sink, Source}

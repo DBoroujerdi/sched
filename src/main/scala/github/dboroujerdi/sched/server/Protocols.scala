@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.sse
+package github.dboroujerdi.sched.server
 
 import github.dboroujerdi.sched.model.ScheduledEvent
 import github.dboroujerdi.sched.model.Types.Schedule
