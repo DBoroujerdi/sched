@@ -1,17 +1,16 @@
-package github.dboroujerdi.sched.parse.pool
+package github.dboroujerdi.sched.app.parse.pool
 
 import akka.actor.{Actor, ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern._
 import akka.routing.RoundRobinPool
 import akka.util.Timeout
 import cats.data.OptionT
-import github.dboroujerdi.sched.FutureMaybe
-import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
-import github.dboroujerdi.sched.model.Types.Schedule
-import github.dboroujerdi.sched.parse.Types.ErrorOrEvent
-import github.dboroujerdi.sched.parse.pool.ParserMaster.{CompletedWork, Start}
-import github.dboroujerdi.sched.parse.pool.WorkerParser.Work
-import github.dboroujerdi.sched.parse.{HtmlScheduleParser, MatchElementParser, ParserComponent, TimeParser}
+import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
+import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
+import github.dboroujerdi.sched.app.parse.Types.ErrorOrEvent
+import github.dboroujerdi.sched.app.parse.pool.ParserMaster.{CompletedWork, Start}
+import github.dboroujerdi.sched.app.parse.pool.WorkerParser.Work
+import github.dboroujerdi.sched.app.parse.{HtmlScheduleParser, MatchElementParser, ParserComponent, TimeParser}
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
 import scala.concurrent.duration._

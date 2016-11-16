@@ -1,16 +1,14 @@
-package github.dboroujerdi.sched.parse.stream
+package github.dboroujerdi.sched.app.parse.stream
 
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.util.Timeout
 import cats.data.{OptionT, Xor}
-import github.dboroujerdi.sched.FutureMaybe
-import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
-import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.model.Types.Schedule
-import github.dboroujerdi.sched.parse._
+import github.dboroujerdi.sched.api.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
+import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
+import github.dboroujerdi.sched.app.parse._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
-import scala.concurrent.Future
 import scala.concurrent.duration._
 
 trait StreamParseComponent extends ParserComponent {

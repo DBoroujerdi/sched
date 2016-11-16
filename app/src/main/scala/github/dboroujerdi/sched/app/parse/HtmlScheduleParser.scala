@@ -1,6 +1,6 @@
-package github.dboroujerdi.sched.parse
+package github.dboroujerdi.sched.app.parse
 
-import github.dboroujerdi.sched.parse.Types._
+import github.dboroujerdi.sched.app.parse.Types.ErrorOrEvent
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.{Document, Element}

@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.parse
+package github.dboroujerdi.sched.app.parse
 
 import enumeratum._
 import org.joda.time.DateTime

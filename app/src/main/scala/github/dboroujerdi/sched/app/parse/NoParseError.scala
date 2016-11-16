@@ -1,7 +1,7 @@
-package github.dboroujerdi.sched.parse
+package github.dboroujerdi.sched.app.parse
 
 import cats.data.Xor
-import github.dboroujerdi.sched.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.ScheduledEvent
 import net.ruippeixotog.scalascraper.model.Element
 
 trait ScrapeError

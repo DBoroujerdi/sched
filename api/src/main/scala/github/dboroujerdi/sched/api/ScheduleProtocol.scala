@@ -1,12 +1,12 @@
-package github.dboroujerdi.sched.web
+package github.dboroujerdi.sched.api
 
-import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.model.Types.Schedule
+import github.dboroujerdi.sched.api.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.Types.Schedule
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import spray.json.{DefaultJsonProtocol, _}
 
-trait Protocols extends DefaultJsonProtocol {
+trait ScheduleProtocol extends DefaultJsonProtocol {
 
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
     private val parserISO = ISODateTimeFormat.dateTimeNoMillis()
@@ -22,4 +22,4 @@ trait Protocols extends DefaultJsonProtocol {
   implicit val ScheduledEventFormat = jsonFormat5(ScheduledEvent)
 }
 
-object Protocols extends Protocols
+object ScheduleProtocol extends ScheduleProtocol

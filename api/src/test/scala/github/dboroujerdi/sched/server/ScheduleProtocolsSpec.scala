@@ -1,14 +1,14 @@
 package github.dboroujerdi.sched.server
 
-import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.model.Types.Schedule
-import github.dboroujerdi.sched.web.Protocols
+import github.dboroujerdi.sched.api.ScheduleProtocol
+import github.dboroujerdi.sched.api.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.Types.Schedule
 import org.joda.time.DateTime
 import org.scalatest.FunSpec
 import spray.json._
 
-class ProtocolsSpec extends FunSpec
-  with Protocols {
+class ScheduleProtocolsSpec extends FunSpec
+  with ScheduleProtocol {
 
   describe("Json Protocol") {
     it("should encode a ScheduledEvent as JSON") {

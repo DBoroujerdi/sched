@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.infrastructure
+package github.dboroujerdi.sched.app.infrastructure
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer

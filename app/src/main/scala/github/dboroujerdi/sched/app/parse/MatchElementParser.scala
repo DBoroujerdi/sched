@@ -1,13 +1,13 @@
-package github.dboroujerdi.sched.parse
+package github.dboroujerdi.sched.app.parse
 
 import java.net.URL
 
 import cats.data.Xor
-import github.dboroujerdi.sched.model.ScheduledEvent
-import github.dboroujerdi.sched.model.Types._
-import github.dboroujerdi.sched.parse.util.UrlParseUtils
-import Types.ErrorOrEvent
-import github.dboroujerdi.sched.parse.MatchElementParser.TeamsNames
+import github.dboroujerdi.sched.api.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.Types._
+import github.dboroujerdi.sched.app.parse.MatchElementParser.TeamsNames
+import github.dboroujerdi.sched.app.parse.Types.ErrorOrEvent
+import github.dboroujerdi.sched.app.parse.util.UrlParseUtils
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Element

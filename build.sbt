@@ -28,10 +28,10 @@ lazy val root = project.in(file("."))
   .dependsOn(app % "test->test;compile->compile")
   .settings(commonSettings)
 
-lazy val api = project.in(file("sched-api"))
+lazy val api = Project(id = "sched-api", base = file("api"))
   .settings(commonSettings)
 
-lazy val app = project.in(file("schep-app"))
+lazy val app = Project(id = "sched-app", base = file("app"))
   .dependsOn(api % "test->test;compile->compile")
   .settings(commonSettings)
 

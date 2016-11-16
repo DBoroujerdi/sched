@@ -1,10 +1,9 @@
-package github.dboroujerdi.sched.parse
+package github.dboroujerdi.sched.app.parse
 
 import cats.data.{OptionT, Xor}
-import github.dboroujerdi.sched.FutureMaybe
-import github.dboroujerdi.sched.infrastructure.ActorSystemComponent
-import github.dboroujerdi.sched.model.Types.Schedule
-import github.dboroujerdi.sched.parse.Types.ErrorOrEvent
+import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
+import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
+import github.dboroujerdi.sched.app.parse.Types.ErrorOrEvent
 import net.ruippeixotog.scalascraper.model.Document
 
 import scala.concurrent.Future
@@ -34,8 +33,6 @@ trait ParserComponent {
 
 trait SynchronousParserComponent extends ParserComponent {
   this: ActorSystemComponent =>
-
-  import scala.concurrent.ExecutionContext.Implicits.global
 
   class SynchronousParser extends Parser {
 

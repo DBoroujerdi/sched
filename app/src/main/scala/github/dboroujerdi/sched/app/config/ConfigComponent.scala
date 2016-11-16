@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.config
+package github.dboroujerdi.sched.app.config
 
 import com.typesafe.config.{Config, ConfigFactory}
 

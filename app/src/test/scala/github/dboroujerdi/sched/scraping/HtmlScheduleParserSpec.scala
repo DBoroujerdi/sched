@@ -1,7 +1,7 @@
 package github.dboroujerdi.sched.scraping
 
 import cats.data.Xor
-import github.dboroujerdi.sched.model.ScheduledEvent
+import github.dboroujerdi.sched.api.model.ScheduledEvent
 import github.dboroujerdi.sched.parse.{HtmlScheduleParser, NoParseError, TimeParser}
 import github.dboroujerdi.sched.scraping.TestData.exampleSchedule
 import org.joda.time.DateTime
