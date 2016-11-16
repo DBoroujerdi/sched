@@ -4,7 +4,8 @@ import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.util.Timeout
 import cats.data.{OptionT, Xor}
 import github.dboroujerdi.sched.api.model.ScheduledEvent
-import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
+import github.dboroujerdi.sched.api.model.Types.Schedule
+import github.dboroujerdi.sched.app.FutureMaybe
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse._
 import net.ruippeixotog.scalascraper.model.{Document, Element}

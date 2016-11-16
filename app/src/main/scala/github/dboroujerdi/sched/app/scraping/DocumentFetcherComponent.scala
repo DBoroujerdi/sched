@@ -4,7 +4,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse, StatusCodes}
 import akka.util.ByteString
 import cats.data.OptionT
-import github.dboroujerdi.sched.api.model.Types.FutureMaybe
+import github.dboroujerdi.sched.app.FutureMaybe
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.model.Document

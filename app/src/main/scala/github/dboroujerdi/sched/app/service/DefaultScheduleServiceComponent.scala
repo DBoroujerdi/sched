@@ -1,8 +1,9 @@
 package github.dboroujerdi.sched.app.service
 
 import cats.implicits._
+import github.dboroujerdi.sched.api.ScheduleService.FutureMaybe
 import github.dboroujerdi.sched.api.ScheduleServiceComponent
-import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
+import github.dboroujerdi.sched.api.model.Types.Schedule
 import github.dboroujerdi.sched.app.config.ConfigComponent
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse.ParserComponent
