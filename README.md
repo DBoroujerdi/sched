@@ -1,6 +1,6 @@
 # Sched
 
-William Hill [schedule](http://sports.williamhill.com/bet/en-gb/betlive/schedule) scraper and sse server.
+William Hill [schedule](http://sports.williamhill.com/bet/en-gb/betlive/schedule) scraper.
 
 
 ## Compile
@@ -13,4 +13,4 @@ William Hill [schedule](http://sports.williamhill.com/bet/en-gb/betlive/schedule
 
 ## Consume
 
-``` http://localhost:9000 ```
+``` curl http://localhost:9000 ```
