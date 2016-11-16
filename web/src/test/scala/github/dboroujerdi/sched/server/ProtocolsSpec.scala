@@ -2,6 +2,7 @@ package github.dboroujerdi.sched.server
 
 import github.dboroujerdi.sched.model.ScheduledEvent
 import github.dboroujerdi.sched.model.Types.Schedule
+import github.dboroujerdi.sched.web.Protocols
 import org.joda.time.DateTime
 import org.scalatest.FunSpec
 import spray.json._
