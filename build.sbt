@@ -23,14 +23,15 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = project.in(file("."))
-  .aggregate(web, core)
-  .dependsOn(web % "test->test;compile->compile")
-  .dependsOn(core % "test->test;compile->compile")
+  .aggregate(api, app)
+  .dependsOn(api % "test->test;compile->compile")
+  .dependsOn(app % "test->test;compile->compile")
   .settings(commonSettings)
 
-lazy val core = project.in(file("core"))
+lazy val api = project.in(file("sched-api"))
   .settings(commonSettings)
 
-lazy val web = project.in(file("web"))
-  .dependsOn(core % "test->test;compile->compile")
+lazy val app = project.in(file("schep-app"))
+  .dependsOn(api % "test->test;compile->compile")
   .settings(commonSettings)
+
