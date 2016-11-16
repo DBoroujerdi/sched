@@ -2,12 +2,12 @@ package github.dboroujerdi.sched.api
 
 import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
 
-trait ScheduleFacadeComponent {
-  trait ScheduleFacade {
+trait ScheduleServiceComponent {
+  trait ScheduleService {
     def fetch(): FutureMaybe[Schedule]
   }
 
-  val scheduleFacade: ScheduleFacade
+  val scheduleService: ScheduleService
 }
 
 

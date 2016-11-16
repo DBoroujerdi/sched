@@ -11,7 +11,7 @@ import cats.implicits._
 import scala.concurrent.{ExecutionContext, Future}
 
 trait ScheduleRoute extends ScheduleProtocol {
-  self: ScheduleFacadeComponent =>
+  self: ScheduleServiceComponent =>
 
   implicit val system: ActorSystem
   implicit val executionContext: ExecutionContext
@@ -19,7 +19,7 @@ trait ScheduleRoute extends ScheduleProtocol {
   val route: HttpRequest => Future[HttpResponse] = {
 
     case HttpRequest(GET, Uri.Path("/"), _, _, _) =>
-      scheduleFacade.fetch()
+      scheduleService.fetch()
         .map(_.toJson)
         .map(_.toString)
         .map(schedule => HttpEntity.Strict(ContentTypes.`application/json`, ByteString(schedule)))

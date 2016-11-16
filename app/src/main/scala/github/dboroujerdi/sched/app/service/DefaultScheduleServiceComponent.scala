@@ -1,21 +1,20 @@
-package github.dboroujerdi.sched.app
+package github.dboroujerdi.sched.app.service
 
-import github.dboroujerdi.sched.api.ScheduleFacadeComponent
+import cats.implicits._
+import github.dboroujerdi.sched.api.ScheduleServiceComponent
 import github.dboroujerdi.sched.api.model.Types.{FutureMaybe, Schedule}
 import github.dboroujerdi.sched.app.config.ConfigComponent
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse.ParserComponent
 import github.dboroujerdi.sched.app.scraping.DocumentFetcherComponent
 
-import cats.implicits._
-
-trait DefaultScheduleFacadeComponent extends ScheduleFacadeComponent {
+trait DefaultScheduleServiceComponent extends ScheduleServiceComponent {
   this: DocumentFetcherComponent
     with ConfigComponent
     with ParserComponent
     with ActorSystemComponent =>
 
-  object ScheduleFacade extends ScheduleFacade {
+  object ScheduleService extends ScheduleService {
 
     val url = config.getString("schedule.scrape.url")
 
@@ -24,5 +23,5 @@ trait DefaultScheduleFacadeComponent extends ScheduleFacadeComponent {
     }
   }
 
-  val scheduleFacade: ScheduleFacade = ScheduleFacade
+  val scheduleService: ScheduleService = ScheduleService
 }

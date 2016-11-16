@@ -7,13 +7,14 @@ import github.dboroujerdi.sched.app.config.DefaultConfigComponent
 import github.dboroujerdi.sched.app.infrastructure.DefaultActorSystemComponent
 import github.dboroujerdi.sched.app.parse.stream.StreamParseComponent
 import github.dboroujerdi.sched.app.scraping.WebDocumentFetcherComponent
+import github.dboroujerdi.sched.app.service.DefaultScheduleServiceComponent
 
 trait Application extends DefaultActorSystemComponent
   with DefaultConfigComponent
   with WebDocumentFetcherComponent
   with StreamParseComponent
   with ScheduleRoute
-  with DefaultScheduleFacadeComponent {
+  with DefaultScheduleServiceComponent {
 
   def startServer(): Unit = {
     val port = config.getInt("app.server.port")
