@@ -1,12 +1,12 @@
-package github.dboroujerdi.sched.app.parse
+package github.dboroujerdi.sched.app.parse.html
 
 import java.net.URL
 
 import cats.data.Xor
 import github.dboroujerdi.sched.api.model.ScheduledEvent
 import github.dboroujerdi.sched.api.model.Types._
-import github.dboroujerdi.sched.app.parse.MatchElementParser.TeamsNames
-import github.dboroujerdi.sched.app.parse.Types.ErrorOrEvent
+import github.dboroujerdi.sched.app.parse.html.EventElementParser.TeamsNames
+import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
 import github.dboroujerdi.sched.app.parse.util.UrlParseUtils
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
@@ -16,12 +16,13 @@ import org.joda.time.DateTime
 
 import scala.util.{Failure, Success, Try}
 
-object MatchElementParser {
-  type MatchElement = Element
+object EventElementParser {
+  type EventElement = Element
   type TeamsNames = (String, String)
 }
 
-class MatchElementParser(timeParser: TimeParser) {
+class EventElementParser {
+  this: TimeParser =>
 
   def parseElement(element: Element): ErrorOrEvent = {
     try {
@@ -39,7 +40,7 @@ class MatchElementParser(timeParser: TimeParser) {
   private def parseFields(item: ElementFields): Option[ScheduledEvent] = {
     for {
       teamNames <- parseOutTeamNames(item.name)
-      time <- timeParser.parseTime(item.time, DateTime.now())
+      time <- parseTime(item.time, DateTime.now())
       matchId <- parseIdFromUrl(item.url)
     } yield ScheduledEvent(matchId, teamNames._1, teamNames._2, time, item.sport)
   }

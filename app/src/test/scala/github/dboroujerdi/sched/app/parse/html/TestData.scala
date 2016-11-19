@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.scraping
+package github.dboroujerdi.sched.app.parse.html
 
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 

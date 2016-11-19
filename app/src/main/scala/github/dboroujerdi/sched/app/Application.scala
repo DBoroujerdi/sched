@@ -5,14 +5,14 @@ import akka.stream.scaladsl.Sink
 import github.dboroujerdi.sched.api.ScheduleRoute
 import github.dboroujerdi.sched.app.config.DefaultConfigComponent
 import github.dboroujerdi.sched.app.infrastructure.DefaultActorSystemComponent
-import github.dboroujerdi.sched.app.parse.stream.StreamParseComponent
+import github.dboroujerdi.sched.app.parse.stream.StreamingParserComponent
 import github.dboroujerdi.sched.app.scraping.WebDocumentFetcherComponent
 import github.dboroujerdi.sched.app.service.DefaultScheduleServiceComponent
 
 trait Application extends DefaultActorSystemComponent
   with DefaultConfigComponent
   with WebDocumentFetcherComponent
-  with StreamParseComponent
+  with StreamingParserComponent
   with ScheduleRoute
   with DefaultScheduleServiceComponent {
 

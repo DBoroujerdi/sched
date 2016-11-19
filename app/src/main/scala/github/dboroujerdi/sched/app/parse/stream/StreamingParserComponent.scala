@@ -8,23 +8,23 @@ import github.dboroujerdi.sched.api.model.Types.Schedule
 import github.dboroujerdi.sched.app.FutureMaybe
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse._
+import github.dboroujerdi.sched.app.parse.html._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
 import scala.concurrent.duration._
 
-trait StreamParseComponent extends ParserComponent {
+trait StreamingParserComponent extends ParserComponent {
   this: ActorSystemComponent =>
 
   class StreamParser extends Parser {
 
-    private val htmlParser = new HtmlScheduleParser(TimeParser)
-    val parser = new MatchElementParser(TimeParser)
+    private val eventParser = new EventElementParser with RawTimeParser
 
     implicit val timeout: Timeout = 5 seconds
 
     val parserFlow =
       Flow[Element]
-        .map(parser.parseElement)
+        .map(eventParser.parseElement)
         .filter {
           case Xor.Left(error@ExceptionalScrapeError(_, _)) => false
           case _ => true
@@ -34,7 +34,7 @@ trait StreamParseComponent extends ParserComponent {
         }
 
     def parse(doc: Document): FutureMaybe[Schedule] = {
-      val elements: Seq[Element] = htmlParser.parseMatchElements(doc)
+      val elements: Seq[Element] = PageParser.parseMatchElements(doc)
 
       OptionT {
         Source(elements.toList)
