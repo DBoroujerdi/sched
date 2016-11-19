@@ -7,7 +7,7 @@ import github.dboroujerdi.sched.api.model.ScheduledEvent
 import github.dboroujerdi.sched.api.model.Types._
 import github.dboroujerdi.sched.app.parse.html.EventElementParser.TeamsNames
 import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
-import github.dboroujerdi.sched.app.parse.util.UrlParseUtils
+import github.dboroujerdi.sched.app.parse.util.URLUtils
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Element
@@ -21,7 +21,7 @@ object EventElementParser {
   type TeamsNames = (String, String)
 }
 
-class EventElementParser {
+class EventElementParser extends URLUtils {
   this: TimeParser =>
 
   def parseElement(element: Element): ErrorOrEvent = {
@@ -56,8 +56,8 @@ class EventElementParser {
     Try(new URL(urlS)) match {
       case Success(url) =>
         (for {
-          path <- UrlParseUtils.extractPath(url)
-          paths = UrlParseUtils.splitPath(path)
+          path <- extractPath(url)
+          paths = splitPath(path)
         } yield paths) match {
           case Some(p) if p.length >= 4 => Some(p(4))
           case _ => None

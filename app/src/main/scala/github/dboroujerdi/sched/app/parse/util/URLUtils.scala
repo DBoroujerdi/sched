@@ -4,7 +4,7 @@ import java.net.URL
 
 // todo see if we can add these util functions to a URL type
 
-object UrlParseUtils {
+trait URLUtils {
 
   private object UrlExtractor {
     def unapply(in: URL) = Some((
@@ -26,3 +26,5 @@ object UrlParseUtils {
     path.split('/').toVector.tail
   }
 }
+
+object URLUtils extends URLUtils
