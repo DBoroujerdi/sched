@@ -33,7 +33,7 @@ object Month extends Enum[Month] {
 }
 
 trait TimeParser {
-  def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime]
+  protected def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime]
 }
 
 trait RawTimeParser extends TimeParser {
@@ -43,7 +43,7 @@ trait RawTimeParser extends TimeParser {
 
   private val fmt = DateTimeFormat.forPattern("HH:mm")
 
-  def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = rawTime.trim match {
+  protected def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = rawTime.trim match {
     case "Event Started!" =>
       None
 
@@ -62,7 +62,7 @@ trait RawTimeParser extends TimeParser {
       } yield checkAndHandleMatchesInNewYear(matchDate, currentDate)
   }
 
-  def updateWithTheCurrentYear(matchTime: DateTime, currentDate: DateTime) = {
+  private def updateWithTheCurrentYear(matchTime: DateTime, currentDate: DateTime) = {
     matchTime
       .withYear(currentDate.getYear)
       .withMonthOfYear(currentDate.getMonthOfYear)
