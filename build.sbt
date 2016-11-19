@@ -18,7 +18,7 @@ lazy val commonSettings = Seq(
     "com.typesafe.akka" %% "akka-actor" % "2.4.12",
     "com.typesafe.akka" %% "akka-http-experimental" % "2.4.11",
     "com.typesafe.akka" %% "akka-stream" % "2.4.11",
-    "org.scalatest" % "scalatest_2.11" % "3.0.0" % "test"
+    "org.scalatest" %% "scalatest" % "3.0.0" % "test"
   )
 )
 
