@@ -2,4 +2,5 @@
 target/
 .DS_Store
 *.iml
-
+.ensime
+.ensime_cache/
