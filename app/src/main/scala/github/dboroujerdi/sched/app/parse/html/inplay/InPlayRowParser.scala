@@ -8,7 +8,7 @@ import github.dboroujerdi.sched.api.model.{InPlayEvent, ScheduledEvent, Score}
 import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
 import github.dboroujerdi.sched.app.parse.html.prematch.EventElementParser.TeamsNames
 import github.dboroujerdi.sched.app.parse.html.{ExceptionalScrapeError, NoParseError}
-import github.dboroujerdi.sched.app.parse.util.URLUtils._
+import github.dboroujerdi.sched.app.parse.util._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Element
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors.{attr, elementList, text}
@@ -45,8 +45,8 @@ object InPlayRowParser {
     Try(new URL(urlS)) match {
       case Success(url) =>
         (for {
-          path <- extractPath(url)
-          paths = splitPath(path)
+          path <- url.extractPath
+          paths = path.splitBy('/').tail
         } yield paths) match {
           case Some(p) if p.length >= 4 => Some(p(4))
           case _ => None

@@ -8,22 +8,21 @@ import github.dboroujerdi.sched.api.model.{PreMatchEvent, ScheduledEvent}
 import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
 import github.dboroujerdi.sched.app.parse.html.prematch.EventElementParser.TeamsNames
 import github.dboroujerdi.sched.app.parse.html.{ElementFields, ExceptionalScrapeError, NoParseError}
-import github.dboroujerdi.sched.app.parse.util.URLUtils
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Element
 import org.joda.time.DateTime
 
-import github.dboroujerdi.sched.app.parse.util.URLUtils._
-
 import scala.util.{Failure, Success, Try}
+
+import github.dboroujerdi.sched.app.parse.util._
 
 object EventElementParser {
   type EventElement = Element
   type TeamsNames = (String, String)
 }
 
-class EventElementParser extends URLUtils {
+class EventElementParser {
   this: TimeParser =>
 
   def parseElement(element: Element): ErrorOrEvent = {
@@ -58,8 +57,8 @@ class EventElementParser extends URLUtils {
     Try(new URL(urlS)) match {
       case Success(url) =>
         (for {
-          path <- extractPath(url)
-          paths = splitPath(path)
+          path <- url.extractPath
+          paths = path.splitBy('/').tail
         } yield paths) match {
           case Some(p) if p.length >= 4 => Some(p(4))
           case _ => None
