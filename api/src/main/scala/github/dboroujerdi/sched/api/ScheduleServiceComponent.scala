@@ -9,7 +9,8 @@ import scala.concurrent.Future
 trait ScheduleServiceComponent {
 
   trait ScheduleService {
-    def fetch(): FutureMaybe[Schedule]
+    def preMatch(): FutureMaybe[Schedule]
+    def inPlay(): FutureMaybe[Schedule]
   }
 
   val scheduleService: ScheduleService

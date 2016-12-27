@@ -15,7 +15,7 @@ trait URLUtils {
       ))
   }
 
-  def extractPath(url: URL) = url match {
+  def extractPath(url: URL): Option[String] = url match {
     case UrlExtractor(_, _, _, path) if !path.isEmpty =>
       Some(path)
     case _ =>

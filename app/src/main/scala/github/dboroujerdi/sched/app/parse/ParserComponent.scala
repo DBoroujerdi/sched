@@ -9,7 +9,9 @@ import net.ruippeixotog.scalascraper.model.Document
 
 trait ParserComponent {
 
-  trait Parser {
+  type Parser = Document => FutureMaybe[Schedule]
+
+  trait Parsers {
 
     protected def logAndFilterFailures(list: Seq[ErrorOrEvent]): Option[Schedule] = {
       list.filter(_.isLeft).foreach {
@@ -24,8 +26,9 @@ trait ParserComponent {
       }
     }
 
-    def parse(doc: Document): FutureMaybe[Schedule]
+    val inPlayParser: Parser
+    val preMatchParser: Parser
   }
 
-  val parser: Parser
+  val parsers: Parsers
 }

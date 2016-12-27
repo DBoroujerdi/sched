@@ -1,18 +1,20 @@
-package github.dboroujerdi.sched.app.parse.html
+package github.dboroujerdi.sched.app.parse.html.prematch
 
 import java.net.URL
 
 import cats.data.Xor
-import github.dboroujerdi.sched.api.model.ScheduledEvent
 import github.dboroujerdi.sched.api.model.Types._
-import github.dboroujerdi.sched.app.parse.html.EventElementParser.TeamsNames
+import github.dboroujerdi.sched.api.model.{PreMatchEvent, ScheduledEvent}
 import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
+import github.dboroujerdi.sched.app.parse.html.prematch.EventElementParser.TeamsNames
+import github.dboroujerdi.sched.app.parse.html.{ElementFields, ExceptionalScrapeError, NoParseError}
 import github.dboroujerdi.sched.app.parse.util.URLUtils
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Element
-import net.ruippeixotog.scalascraper.scraper.ContentExtractors.{attr => _, element => _, elementList => _, text => _}
 import org.joda.time.DateTime
+
+import github.dboroujerdi.sched.app.parse.util.URLUtils._
 
 import scala.util.{Failure, Success, Try}
 
@@ -42,7 +44,7 @@ class EventElementParser extends URLUtils {
       teamNames <- parseOutTeamNames(item.name)
       time <- parseTime(item.time, DateTime.now())
       matchId <- parseIdFromUrl(item.url)
-    } yield ScheduledEvent(matchId, teamNames._1, teamNames._2, time, item.sport)
+    } yield PreMatchEvent(matchId, teamNames._1, teamNames._2, item.sport, time)
   }
 
   private def parseOutTeamNames(name: String): Option[TeamsNames] = {

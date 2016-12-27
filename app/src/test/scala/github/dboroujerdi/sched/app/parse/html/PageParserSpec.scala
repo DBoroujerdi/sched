@@ -7,11 +7,19 @@ class PageParserSpec extends FunSpec
 
   describe("Schedule HTML parsing") {
 
-    describe("given test schedule") {
+    describe("Pre-match schedule") {
 
-      it("should parse only the football matches") {
-        val parsed = PageParser.parseMatchElements(TestData.exampleSchedule)
-        assert(parsed.length == 6)
+      it("should parse match rows") {
+        val parsed = PageParser.parseElementRows(TestData.examplePreMatchSchedule)
+        assert(parsed.length == 8)
+      }
+    }
+
+    describe("In-play schedule") {
+
+      it("should parse match rows") {
+        val parsed = PageParser.parseElementRows(TestData.exampleInPlaySchedule)
+        assert(parsed.length == 3)
       }
     }
   }

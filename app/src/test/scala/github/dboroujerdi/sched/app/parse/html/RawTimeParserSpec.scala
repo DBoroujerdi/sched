@@ -1,5 +1,6 @@
 package github.dboroujerdi.sched.app.parse.html
 
+import github.dboroujerdi.sched.app.parse.html.prematch.RawTimeParser
 import org.joda.time.DateTime
 import org.scalatest.FunSpec
 
