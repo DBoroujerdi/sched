@@ -16,7 +16,7 @@ object InPlay extends FieldParsing {
       score <- parseScore(fields._4)
       time = fields._1
       matchId <- parseIdFromUrl(fields._2)
-    } yield InPlayEvent(matchId, teamNames._1, teamNames._2, "Football", time, Score.from(score))
+    } yield InPlayEvent(matchId, teamNames._1, teamNames._2, "Football", time, Score(score))
   }
 
   private def extractFields(elem: Element): Option[Fields] = {

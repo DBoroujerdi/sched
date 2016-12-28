@@ -1,6 +1,6 @@
 package github.dboroujerdi.sched.app.parse.html
 
-import org.scalatest.{FunSpec, FunSuite, Matchers}
+import org.scalatest.{FunSpec, Matchers}
 
 class FieldParsingSpec extends FunSpec
   with Matchers
@@ -31,6 +31,37 @@ class FieldParsingSpec extends FunSpec
       it("should trim any whitespace around team names") {
         parseTeamNames(" Arsenal v  Manchester United") should matchPattern {
           case Some(("Arsenal", "Manchester United")) =>
+        }
+      }
+    }
+
+    describe("Score string parsing") {
+
+      it("should parse a score string in format 'n-m'") {
+        parseScore("0-0") should matchPattern {
+          case Some((0, 0)) =>
+        }
+
+        parseScore("2-1") should matchPattern {
+          case Some((2, 1)) =>
+        }
+      }
+
+      it("should handle scores of the correct format but without numbers") {
+        parseScore("NaN-1") should matchPattern {
+          case None =>
+        }
+      }
+
+      it("should handle whitespace in the string") {
+        parseScore(" 1 -1 ") should matchPattern {
+          case Some((1, 1)) =>
+        }
+      }
+
+      it("should parse scores in the double digits") {
+        parseScore("11-0") should matchPattern {
+          case Some((11, 0)) =>
         }
       }
     }

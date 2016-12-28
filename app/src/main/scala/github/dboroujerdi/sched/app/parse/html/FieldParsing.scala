@@ -11,16 +11,16 @@ import scala.util.{Failure, Success, Try}
 // todo unit testing
 trait FieldParsing {
 
-  def parseScore(score: String): Option[(String, String)] = {
-    score.split("-") match {
-      case Array(home, away) => Some((home, away))
+  def parseScore(score: String): Option[(Int, Int)] = {
+    score.clean().removeWhitespace().split("-") match {
+      case Array(home, away) => Try((home.toInt, away.toInt)).toOption
       case _ => None
     }
   }
 
   def parseTeamNames(name: String): Option[TeamsNames] = {
-    name.split(" v ") match {
-      case Array(home, away) => Some((home.replace('\u00A0',' ').trim(), away.replace('\u00A0',' ').trim()))
+    name.clean().split(" v ") match {
+      case Array(home, away) => Some((home.trim, away.trim))
       case _ => None
     }
   }

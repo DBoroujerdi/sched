@@ -24,5 +24,7 @@ package object util {
 
   implicit class StringImprovements(str: String) {
     def splitBy(char: Char): Vector[String] = str.split(char).toVector
+    def clean(): String = str.replace('\u00A0',' ')
+    def removeWhitespace(): String = str.trim().replaceAll("\\s+","")
   }
 }

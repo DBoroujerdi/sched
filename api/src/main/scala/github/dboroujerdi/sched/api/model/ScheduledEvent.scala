@@ -13,7 +13,7 @@ object Types {
 case class Score(home: Int, away: Int)
 
 object Score {
-  def from(tuple: (String, String)): Score = Score(tuple._1.toInt, tuple._2.toInt)
+  def apply(tuple: (Int, Int)): Score = Score(tuple._1, tuple._2)
 }
 
 trait ScheduledEvent
