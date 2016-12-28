@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.app.parse
+package github.dboroujerdi.sched.app.parse.html
 
 import enumeratum._
 import org.joda.time.DateTime
@@ -36,7 +36,7 @@ trait TimeParser {
   def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime]
 }
 
-object TimeParser extends TimeParser {
+trait RawTimeParser extends TimeParser {
 
   private val datePattern = "[0-9]*\\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)".r
   private val timePattern = "[0-9]*:[0-9]*".r
@@ -62,7 +62,7 @@ object TimeParser extends TimeParser {
       } yield checkAndHandleMatchesInNewYear(matchDate, currentDate)
   }
 
-  def updateWithTheCurrentYear(matchTime: DateTime, currentDate: DateTime) = {
+  private def updateWithTheCurrentYear(matchTime: DateTime, currentDate: DateTime) = {
     matchTime
       .withYear(currentDate.getYear)
       .withMonthOfYear(currentDate.getMonthOfYear)
@@ -93,3 +93,5 @@ object TimeParser extends TimeParser {
       }
   }
 }
+
+object RawTimeParser extends RawTimeParser

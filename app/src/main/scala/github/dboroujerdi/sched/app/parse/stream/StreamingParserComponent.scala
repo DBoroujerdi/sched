@@ -1,5 +1,6 @@
 package github.dboroujerdi.sched.app.parse.stream
 
+import akka.NotUsed
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.util.Timeout
 import cats.data.{OptionT, Xor}
@@ -8,23 +9,24 @@ import github.dboroujerdi.sched.api.model.Types.Schedule
 import github.dboroujerdi.sched.app.FutureMaybe
 import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse._
+import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
+import github.dboroujerdi.sched.app.parse.html._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
 import scala.concurrent.duration._
 
-trait StreamParseComponent extends ParserComponent {
+trait StreamingParserComponent extends ParserComponent {
   this: ActorSystemComponent =>
 
-  class StreamParser extends Parser {
+  class StreamParsers extends Parsers {
 
-    private val htmlParser = new HtmlScheduleParser(TimeParser)
-    val parser = new MatchElementParser(TimeParser)
+    type ElementParser = Element => ErrorOrEvent
 
     implicit val timeout: Timeout = 5 seconds
 
-    val parserFlow =
+    private def createParserFlowFor(elementParser: ElementParser): Flow[Element, ScheduledEvent, NotUsed] =
       Flow[Element]
-        .map(parser.parseElement)
+        .map(elementParser)
         .filter {
           case Xor.Left(error@ExceptionalScrapeError(_, _)) => false
           case _ => true
@@ -33,18 +35,27 @@ trait StreamParseComponent extends ParserComponent {
           case Xor.Right(event) => event
         }
 
-    def parse(doc: Document): FutureMaybe[Schedule] = {
-      val elements: Seq[Element] = htmlParser.parseMatchElements(doc)
+    def parse(flow: Flow[Element, ScheduledEvent, NotUsed])(doc: Document): FutureMaybe[Schedule] = {
+      val elements: Seq[Element] = PageParser.parseElementRows(doc)
 
       OptionT {
         Source(elements.toList)
-          .via(parserFlow)
+          .via(flow)
           .toMat(Sink.seq[ScheduledEvent])(Keep.right)
           .run()
           .map(Option(_))
       }
     }
+
+    val inPlayParser: Parser = document => {
+      val flow = createParserFlowFor(InPlay.parse)
+      parse(flow)(document)
+    }
+    val preMatchParser: Parser = document => {
+      val flow = createParserFlowFor(PreMatch.parser(RawTimeParser))
+      parse(flow)(document)
+    }
   }
 
-  val parser: Parser = new StreamParser
+  val parsers: Parsers = new StreamParsers
 }

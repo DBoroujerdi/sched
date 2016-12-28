@@ -17,10 +17,13 @@ trait DefaultScheduleServiceComponent extends ScheduleServiceComponent {
 
   object ScheduleService extends ScheduleService {
 
-    val url = config.getString("schedule.scrape.url")
+    def preMatch(): FutureMaybe[Schedule] = fetch(preMatchUrl, parsers.preMatchParser)
+    def inPlay(): FutureMaybe[Schedule] = fetch(inPlayUrl, parsers.inPlayParser)
 
-    def fetch(): FutureMaybe[Schedule] = {
-      documentFetcher.fetchDocument(url).flatMap(document => parser.parse(document))
+    private def fetch(url: String, parser: Parser): FutureMaybe[Schedule] = {
+      documentFetcher
+        .fetchDocument(url)
+        .flatMap(parser)
     }
   }
 

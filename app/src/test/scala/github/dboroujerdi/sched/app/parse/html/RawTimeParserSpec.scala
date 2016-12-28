@@ -1,23 +1,23 @@
-package github.dboroujerdi.sched.scraping
+package github.dboroujerdi.sched.app.parse.html
 
-import github.dboroujerdi.sched.parse.TimeParser
 import org.joda.time.DateTime
 import org.scalatest.FunSpec
 
-class TimeParserSpec extends FunSpec {
+class RawTimeParserSpec extends FunSpec
+  with RawTimeParser {
 
   describe("TimerParser") {
 
     val fakeCurrentDate = DateTime.now().withDate(2016, 10, 22)
 
     it("should parse \"Live At23:30 UK\"") {
-      val time = TimeParser.parseTime("Live At23:30 UK ", fakeCurrentDate)
+      val time = parseTime("Live At23:30 UK ", fakeCurrentDate)
       assert(time.isDefined)
       assert(isToday(time.get, fakeCurrentDate))
     }
 
     it("should parse \"23 Oct15:00 UK\"") {
-      val time = TimeParser.parseTime("23 Oct15:00 UK", fakeCurrentDate)
+      val time = parseTime("23 Oct15:00 UK", fakeCurrentDate)
       assert(time.isDefined)
 
       val dateTime = time.get
@@ -27,7 +27,7 @@ class TimeParserSpec extends FunSpec {
     }
 
     it("should parse \"2 Jan15:00 UK\" as next year") {
-      val time = TimeParser.parseTime("2 Jan15:00 UK", fakeCurrentDate)
+      val time = parseTime("2 Jan15:00 UK", fakeCurrentDate)
       assert(time.isDefined)
 
       val dateTime = time.get
@@ -37,7 +37,7 @@ class TimeParserSpec extends FunSpec {
     }
 
     it("should not parse the time of a match that has already started") {
-      val time = TimeParser.parseTime("Event Started!", fakeCurrentDate)
+      val time = parseTime("Event Started!", fakeCurrentDate)
       assert(time.isEmpty)
     }
   }
