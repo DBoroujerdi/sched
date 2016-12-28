@@ -1,25 +1,25 @@
 package github.dboroujerdi.sched.app.parse.html
 
 import cats.data.Xor
-import github.dboroujerdi.sched.api.model.{PreMatchEvent, ScheduledEvent}
-import github.dboroujerdi.sched.app.parse.html.prematch.{EventElementParser, TimeParser}
+import github.dboroujerdi.sched.api.model.PreMatchEvent
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
 
-class EventElementParserSpec extends FunSpec
+class PreMatchRowParserSpec extends FunSpec
   with Matchers {
 
   val matchElement :: _ = PageParser.parseElementRows(TestData.examplePreMatchSchedule).tail
 
   describe("Event element parser") {
-    val eventElementParser = new EventElementParser with TimeParser {
+    val timeParser = new TimeParser {
       def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = Some(DateTime.now())
     }
 
     describe("given match element") {
       it("should parse event html element") {
-        val scheduleEvent = eventElementParser.parseElement(matchElement)
-        scheduleEvent should matchPattern { case Xor.Right(PreMatchEvent("123456", "Man City", "West Ham", "Football", _)) => }
+        PreMatch.parser(timeParser)(matchElement) should matchPattern {
+          case Xor.Right(PreMatchEvent("123456", "Man City", "West Ham", "Football", _)) =>
+        }
       }
     }
   }

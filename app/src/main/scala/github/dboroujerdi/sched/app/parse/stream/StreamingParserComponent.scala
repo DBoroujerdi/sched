@@ -11,8 +11,6 @@ import github.dboroujerdi.sched.app.infrastructure.ActorSystemComponent
 import github.dboroujerdi.sched.app.parse._
 import github.dboroujerdi.sched.app.parse.html.Types.ErrorOrEvent
 import github.dboroujerdi.sched.app.parse.html._
-import github.dboroujerdi.sched.app.parse.html.inplay.InPlayRowParser
-import github.dboroujerdi.sched.app.parse.html.prematch.{EventElementParser, RawTimeParser}
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
 import scala.concurrent.duration._
@@ -24,11 +22,9 @@ trait StreamingParserComponent extends ParserComponent {
 
     type ElementParser = Element => ErrorOrEvent
 
-    private val eventParser = new EventElementParser with RawTimeParser
-
     implicit val timeout: Timeout = 5 seconds
 
-    private def parserFlow(elementParser: ElementParser): Flow[Element, ScheduledEvent, NotUsed] =
+    private def createParserFlowFor(elementParser: ElementParser): Flow[Element, ScheduledEvent, NotUsed] =
       Flow[Element]
         .map(elementParser)
         .filter {
@@ -52,11 +48,11 @@ trait StreamingParserComponent extends ParserComponent {
     }
 
     val inPlayParser: Parser = document => {
-      val flow = parserFlow(InPlayRowParser.parseRow)
+      val flow = createParserFlowFor(InPlay.parse)
       parse(flow)(document)
     }
     val preMatchParser: Parser = document => {
-      val flow = parserFlow(eventParser.parseElement)
+      val flow = createParserFlowFor(PreMatch.parser(RawTimeParser))
       parse(flow)(document)
     }
   }

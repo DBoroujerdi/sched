@@ -1,4 +1,4 @@
-package github.dboroujerdi.sched.app.parse.html.prematch
+package github.dboroujerdi.sched.app.parse.html
 
 import enumeratum._
 import org.joda.time.DateTime
@@ -33,7 +33,7 @@ object Month extends Enum[Month] {
 }
 
 trait TimeParser {
-  protected def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime]
+  def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime]
 }
 
 trait RawTimeParser extends TimeParser {
@@ -43,7 +43,7 @@ trait RawTimeParser extends TimeParser {
 
   private val fmt = DateTimeFormat.forPattern("HH:mm")
 
-  protected def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = rawTime.trim match {
+  def parseTime(rawTime: String, currentDate: DateTime): Option[DateTime] = rawTime.trim match {
     case "Event Started!" =>
       None
 
@@ -93,3 +93,5 @@ trait RawTimeParser extends TimeParser {
       }
   }
 }
+
+object RawTimeParser extends RawTimeParser
